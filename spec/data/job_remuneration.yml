@@ -1,0 +1,80 @@
+data_mixins:
+    job_remuneration:
+        class: JobRemunerationMixin
+        fields:
+            remuneration:
+                type: "@django.ForeignKey"
+                relation: job_remuneration
+                options:
+                    "null": true
+                    on_delete: "@django.PROTECT"
+                    editable: false
+
+    job_remunerations:
+        class: JobRemunerationsMixin
+        fields:
+            remunerations:
+                type: "@django.ManyToManyField"
+                relation: job_remuneration
+
+data_base:
+    job_remuneration:
+        class: JobRemunerationBase
+        base: resource
+        mixins: [job_remuneration]
+        id_fields: [remuneration_id, name]
+        meta:
+            unique_together: [remuneration, name]
+            scope: remuneration
+
+data:
+    job_remuneration:
+        class: JobRemuneration
+        base: resource
+        roles:
+            edit: [job-admin]
+            view: [public]
+        fields:
+            interval:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 256
+            min_range:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 30
+            max_range:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 30
+        meta:
+            verbose_name: remuneration
+            ordering_fields: [interval, min_range, max_range]
+            ordering: [interval, -max_range]
+            search_fields: [interval, min_range, max_range]
+            command_base: job remuneration
+
+command_mixins:
+    job_remuneration:
+        class: JobRemunerationMixin
+        meta:
+            remuneration:
+                data: job_remuneration
+                priority: 1
+
+command_base:
+    job_remuneration:
+        mixins: [job_remuneration]
+        server_enabled: true
+        groups_allowed: [job-admin]
+
+command:
+    job:
+        remuneration:
+            resource: job_remuneration
+            base: job_remuneration
+            base_name: remuneration
+            priority: 90

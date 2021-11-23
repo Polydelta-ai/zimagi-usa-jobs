@@ -1,0 +1,72 @@
+data_mixins:
+    job_offering_type:
+        class: JobOfferingTypeMixin
+        fields:
+            offering_type:
+                type: "@django.ForeignKey"
+                relation: job_offering_type
+                options:
+                    "null": true
+                    on_delete: "@django.PROTECT"
+                    editable: false
+
+    job_offering_types:
+        class: JobOfferingTypesMixin
+        fields:
+            offering_types:
+                type: "@django.ManyToManyField"
+                relation: job_offering_type
+
+data_base:
+    job_offering_type:
+        class: JobOfferingTypeBase
+        base: resource
+        mixins: [job_offering_type]
+        id_fields: [offering_type_id, name]
+        meta:
+            unique_together: [offering_type, name]
+            scope: offering_type
+
+data:
+    job_offering_type:
+        class: JobOfferingType
+        base: resource
+        id_fields: [code]
+        key: code
+        roles:
+            edit: [job-admin]
+            view: [public]
+        fields:
+            code:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 20
+        meta:
+            verbose_name: offering_type
+            ordering_fields: [code, name]
+            ordering: [code]
+            search_fields: [code, name]
+            command_base: job offering_type
+
+command_mixins:
+    job_offering_type:
+        class: JobOfferingTypeMixin
+        meta:
+            offering_type:
+                data: job_offering_type
+                priority: 1
+
+command_base:
+    job_offering_type:
+        mixins: [job_offering_type]
+        server_enabled: true
+        groups_allowed: [job-admin]
+
+command:
+    job:
+        offering_type:
+            resource: job_offering_type
+            base: job_offering_type
+            base_name: offering_type
+            priority: 70

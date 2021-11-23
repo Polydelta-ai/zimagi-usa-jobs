@@ -1,1 +1,5 @@
 name: usa_jobs
+
+modules:
+    - remote: https://github.com/Polydelta-ai/zimagi-jobs.git
+      reference: main

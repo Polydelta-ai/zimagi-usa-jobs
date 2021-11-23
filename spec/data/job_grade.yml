@@ -1,0 +1,72 @@
+data_mixins:
+    job_grade:
+        class: JobGradeMixin
+        fields:
+            grade:
+                type: "@django.ForeignKey"
+                relation: job_grade
+                options:
+                    "null": true
+                    on_delete: "@django.PROTECT"
+                    editable: false
+
+    job_grades:
+        class: JobGradesMixin
+        fields:
+            grades:
+                type: "@django.ManyToManyField"
+                relation: job_grade
+
+data_base:
+    job_grade:
+        class: JobGradeBase
+        base: resource
+        mixins: [job_grade]
+        id_fields: [grade_id, name]
+        meta:
+            unique_together: [grade, name]
+            scope: grade
+
+data:
+    job_grade:
+        class: JobGrade
+        base: resource
+        id_fields: [code]
+        key: code
+        roles:
+            edit: [job-admin]
+            view: [public]
+        fields:
+            code:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 20
+        meta:
+            verbose_name: grade
+            ordering_fields: [code, name]
+            ordering: [code]
+            search_fields: [code, name]
+            command_base: job grade
+
+command_mixins:
+    job_grade:
+        class: JobGradeMixin
+        meta:
+            grade:
+                data: job_grade
+                priority: 1
+
+command_base:
+    job_grade:
+        mixins: [job_grade]
+        server_enabled: true
+        groups_allowed: [job-admin]
+
+command:
+    job:
+        grade:
+            resource: job_grade
+            base: job_grade
+            base_name: grade
+            priority: 100

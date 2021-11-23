@@ -1,0 +1,72 @@
+data_mixins:
+    job_schedule:
+        class: JobScheduleMixin
+        fields:
+            schedule:
+                type: "@django.ForeignKey"
+                relation: job_schedule
+                options:
+                    "null": true
+                    on_delete: "@django.PROTECT"
+                    editable: false
+
+    job_schedules:
+        class: JobSchedulesMixin
+        fields:
+            schedules:
+                type: "@django.ManyToManyField"
+                relation: job_schedule
+
+data_base:
+    job_schedule:
+        class: JobScheduleBase
+        base: resource
+        mixins: [job_schedule]
+        id_fields: [schedule_id, name]
+        meta:
+            unique_together: [schedule, name]
+            scope: schedule
+
+data:
+    job_schedule:
+        class: JobSchedule
+        base: resource
+        id_fields: [code]
+        key: code
+        roles:
+            edit: [job-admin]
+            view: [public]
+        fields:
+            code:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 20
+        meta:
+            verbose_name: schedule
+            ordering_fields: [code, name]
+            ordering: [code]
+            search_fields: [code, name]
+            command_base: job schedule
+
+command_mixins:
+    job_schedule:
+        class: JobScheduleMixin
+        meta:
+            schedule:
+                data: job_schedule
+                priority: 1
+
+command_base:
+    job_schedule:
+        mixins: [job_schedule]
+        server_enabled: true
+        groups_allowed: [job-admin]
+
+command:
+    job:
+        schedule:
+            resource: job_schedule
+            base: job_schedule
+            base_name: schedule
+            priority: 80

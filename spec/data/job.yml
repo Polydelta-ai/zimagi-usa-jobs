@@ -1,0 +1,67 @@
+data:
+    usa_job:
+        class: USAJob
+        extend: job
+        mixins:
+            - job_grades
+            - job_schedules
+            - job_offering_types
+            - job_remunerations
+        roles:
+            edit: [job-admin]
+            view: [public]
+        fields:
+            who_may_apply:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 256
+            low_grade:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 10
+            high_grade:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 10
+            organization_codes:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 10
+        meta:
+            unique_together: []
+
+command_mixins:
+    usa_job:
+        class: USAJobMixin
+        mixins:
+            - job
+            - job_grade
+            - job_schedule
+            - job_offering_type
+            - job_remuneration
+        meta:
+            job:
+                data: usa_job
+                priority: 10
+
+command_base:
+    usa_job:
+        mixins: [usa_job]
+        server_enabled: true
+        groups_allowed: [job-admin]
+
+command:
+    job:
+        options:
+            allow_update: false
+            allow_remove: false
+            allow_clear: false
+        usa:
+            resource: usa_job
+            base: usa_job
+            base_name: job
+            priority: 110

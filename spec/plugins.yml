@@ -1,0 +1,84 @@
+plugin:
+    source:
+        providers:
+            usa_job:
+                option:
+                    Keyword:
+                        type: str
+                        help: "Issues search to find hits based on a keyword. Optional. Keyword will search for all of the words specified (or synonyms of the word) throughout the job announcement."
+                    PositionTitle:
+                        type: str
+                        help: "Issues search to find hits in the title of the job."
+                    RemunerationMinimumAmount:
+                        type: int
+                        help: "Issues search to find hits with the minimum salary specified."
+                    RemunerationMaximumAmount:
+                        type: int
+                        help: "Issues search to find hits with the maximum salary specified."
+                    PayGradeHigh:
+                        type: int
+                        help: "Issues search to find hits with the maximum pay grade specified. Must be 01 through 15. This is the ending grade for the job. (Caution: Fed speak ahead but it cannot be helped.) The grade along with series is used by the Federal government to categorize and define jobs."
+                    PayGradeLow:
+                        type: int
+                        help: "Issues search to find hits with the minimum pay grade specified. Must be 01 through 15. This is the beginning grade for the job. See PayGradeHigh for more information."
+                    JobCategoryCode:
+                        type: list
+                        help: "Issues a search to find hits with the job category series specified."
+                    LocationName:
+                        type: list
+                        help: "Issues a search to find hits within the specified location. This is the city or military installation name. LocationName simplifies location based search as the user does not need to know or account for each and every Location Code. LocationName will search for all location codes and ZIP codes that have that specific description."
+                    PostingChannel:
+                        type: list
+                        help: "Issues a search to find jobs with a posting channel specified. Posting channels are used to identify different sources for Agency reporting, and categorizing needs."
+                    Organization:
+                        type: list
+                        help: "Issues a search to find jobs for the specified agency using the Agency Subelement Code."
+                    PositionOfferingTypeCode:
+                        type: list
+                        help: "Issues a search to find jobs within the specified type. This field is also known as Work Type."
+                    TravelPercentage:
+                        type: int
+                        help: "Issues a search to find hits for jobs matching the specified travel level. "
+                    PositionScheduleTypeCode:
+                        type: list
+                        help: "Issues a search to find hits for jobs matching the specified job schedule. This field is also known as work schedule."
+                    RelocationIndicator:
+                        type: bool
+                        help: "Issues a search to find hits for jobs matching the relocation filter."
+                    SecurityClearanceRequired:
+                        type: list
+                        help: "Issues a search to find hits for jobs matching the specified security clearance. "
+                    SupervisoryStatus:
+                        type: bool
+                        help: "Issues a search to find hits for jobs matching the specified supervisory status."
+                    DatePosted:
+                        type: int
+                        help: "Issues a search to find hits for jobs that were posted within the number of days specified."
+                    JobGradeCode:
+                        type: list
+                        help: "Issues a search to find hits for jobs matching the grade code specified. This field is also known as Pay Plan."
+                    WhoMayApply:
+                        type: str
+                        help: "Issues a search to find hits based on the desired candidate designation. In this case, public will find jobs that U.S. citizens can apply for."
+                    Radius:
+                        type: str
+                        help: "Issues a search when used along with LocationName, will expand the locations, based on the radius specified."
+                    SalaryBucket:
+                        type: str
+                        help: "Issues a search that will find hits for salaries matching the grouping specified."
+                    GradeBucket:
+                        type: str
+                        help: "Issues a search that will find hits for grades that match the grouping specified."
+                    HiringPath:
+                        type: list
+                        help: "Issues a search that will find hits for hiring paths that match the hiring paths specified."
+                    MissionCriticalTags:
+                        type: list
+                        help: "Issues a search that will find hits for mission critical tags that match the grouping specified."
+                    PositionSensitivity:
+                        type: list
+                        help: "Issues a search that will find hits for jobs matching the position sensitivity and risk specified."
+
+    formatter:
+        providers:
+            usa_jobs_city:

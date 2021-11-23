@@ -1,0 +1,12 @@
+run:
+    ml-data:
+        command: "data save"
+        dataset_provider_name: "collection"
+        dataset_name: job_population
+        dataset_fields:
+            index_field: id
+            "job:fields":
+                - id
+                - name
+                - classifications__name
+                - description

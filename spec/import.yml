@@ -1,0 +1,236 @@
+_usa_jobs_api_import: &usa_jobs_api_import
+    source: usa_job
+    data:
+        location:
+            map:
+                name:
+                    column: id
+                    validators:
+                        string:
+                            empty: false
+                country:
+                    column: country
+                    validators:
+                        string:
+                            empty: false
+                province:
+                    column: province
+                city:
+                    column: city
+                    validators:
+                        string:
+                            empty: false
+                    formatter: usa_jobs_city
+                longitude:
+                    column: longitude
+                    validators:
+                        number:
+                    formatter: number
+                latitude:
+                    column: latitude
+                    validators:
+                        number:
+                    formatter: number
+        organization:
+            requires: [location]
+            relations:
+                parent_id:
+                    data: organization
+                    column: parent
+                    required: false
+                locations:
+                    data: location
+                    column: locations
+                    required: true
+                    multiple: true
+            map:
+                name:
+                    column: name
+                    validators:
+                        string:
+                            empty: false
+        job_source:
+            map:
+                name:
+                    column: name
+                    validators:
+                        string:
+                            empty: false
+        job_classification:
+            map:
+                code:
+                    column: code
+                    validators:
+                        string:
+                            empty: false
+                name:
+                    column: name
+                    validators:
+                        string:
+                            empty: false
+        job_offering_type:
+            map:
+                code:
+                    column: code
+                    validators:
+                        string:
+                            empty: false
+                name:
+                    column: name
+                    validators:
+                        string:
+                            empty: false
+        job_schedule:
+            map:
+                code:
+                    column: code
+                    validators:
+                        string:
+                            empty: false
+                name:
+                    column: name
+                    validators:
+                        string:
+                            empty: false
+        job_grade:
+            map:
+                code:
+                    column: code
+                    validators:
+                        string:
+                            empty: false
+        job_remuneration:
+            map:
+                name:
+                    column: id
+                    validators:
+                        string:
+                            empty: false
+                interval:
+                    column: interval_code
+                    validators:
+                        string:
+                            empty: false
+                min_range:
+                    column: min_range
+                    validators:
+                        string:
+                            empty: false
+                max_range:
+                    column: max_range
+                    validators:
+                        string:
+                            empty: false
+        usa_job:
+            requires:
+                - organization
+                - job_source
+                - job_classification
+                - job_offering_type
+                - job_schedule
+                - job_grade
+                - job_remuneration
+            relations:
+                source_id:
+                    data: job_source
+                    column: source
+                    required: true
+                organization_id:
+                    data: organization
+                    column: organization
+                    required: true
+                department_id:
+                    data: organization
+                    column: department
+                    required: true
+                locations:
+                    data: location
+                    column: locations
+                    required: true
+                    multiple: true
+                classifications:
+                    data: job_classification
+                    column: classifications
+                    required: true
+                    multiple: true
+                offering_types:
+                    data: job_offering_type
+                    column: offering_types
+                    required: false
+                    multiple: true
+                schedules:
+                    data: job_schedule
+                    column: schedules
+                    required: false
+                    multiple: true
+                grades:
+                    data: job_grade
+                    column: grades
+                    required: false
+                    multiple: true
+                remunerations:
+                    data: job_remuneration
+                    column: remunerations
+                    required: false
+                    multiple: true
+            map:
+                name:
+                    column: title
+                    validators:
+                        string:
+                            empty: false
+                external_id:
+                    column: id
+                    validators:
+                        string:
+                            empty: false
+                url:
+                    column: url
+                    validators:
+                        string:
+                            empty: false
+                description:
+                    column: job_summary
+                qualifications:
+                    column: qualification_summary
+                evaluations:
+                    column: evaluations
+                requirements:
+                    column: requirements
+                required_documents:
+                    column: required_documents
+                duties:
+                    column: major_duties
+                education:
+                    column: education
+                benefits:
+                    column: benefits
+                benefits_url:
+                    column: benefits_url
+                how_to_apply:
+                    column: how_to_apply
+                what_to_expect:
+                    column: what_to_expect_next
+                other_information:
+                    column: other_information
+                start_date:
+                    column: start_date
+                end_date:
+                    column: end_date
+                publication_date:
+                    column: publication_start_date
+                application_close_date:
+                    column: application_close_date
+                who_may_apply:
+                    column: who_may_apply_name
+                low_grade:
+                    column: low_grade
+                high_grade:
+                    column: high_grade
+                organization_codes:
+                    column: organization_codes
+
+import:
+    usa_jobs:
+        <<: *usa_jobs_api_import
+        tags: [job, usa_job]

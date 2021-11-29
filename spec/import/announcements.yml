@@ -41,5 +41,5 @@ _usa_jobs_announcement_import: &usa_jobs_announcement_import
 import:
     usa_jobs_announcements:
         <<: *usa_jobs_announcement_import
-        requirements: [usa_jobs_search]
+        requires: [usa_jobs_search]
         tags: [job, usa_job]

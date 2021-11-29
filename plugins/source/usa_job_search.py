@@ -5,9 +5,10 @@ from utility.usa_jobs_api import USAJobsAPI
 from utility.data import get_identifier
 
 import datetime
+import re
 
 
-class Provider(BaseProvider('source', 'usa_job')):
+class Provider(BaseProvider('source', 'usa_job_search')):
 
     def item_columns(self):
         return {
@@ -94,22 +95,16 @@ class Provider(BaseProvider('source', 'usa_job')):
         }
 
 
-    def get_search_params(self):
-        params = {}
-        for key in self.meta['option'].keys():
-            if key[0].isupper() and self.config.get(key, None):
-                params[key] = self.config[key]
-        return params
-
-
     def load_items(self, context):
-        return USAJobsAPI(self.command).search(self.get_search_params())
+        return USAJobsAPI(self.command).search(**self._get_search_params())
 
     def load_item(self, job, context):
         source = 'USAJobs'
 
         locations = []
         for location in job.position_location:
+            location.city_name = self._format_city(location)
+
             locations.append([
                 get_identifier([
                     location.country_code,
@@ -233,3 +228,14 @@ class Provider(BaseProvider('source', 'usa_job')):
                 job.user_area.organization_codes
             ]
         }
+
+
+    def _format_city(self, location):
+        city_name = location.city_name
+
+        if location.country_sub_division_code:
+            city_name = re.sub(r"[\s\,]+{}\s*$".format(location.country_sub_division_code), '', city_name)
+
+        city_name = re.sub(r'^[\s\,]+', '', city_name)
+        city_name = re.sub(r'[\s\,]+$', '', city_name)
+        return city_name

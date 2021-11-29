@@ -1,7 +1,12 @@
+plugin_mixins:
+    usa_jobs_import:
+        class: USAJobsImportMixin
+
 plugin:
     source:
         providers:
-            usa_job:
+            usa_job_search:
+                mixins: [usa_jobs_import]
                 option:
                     Keyword:
                         type: str
@@ -79,6 +84,33 @@ plugin:
                         type: list
                         help: "Issues a search that will find hits for jobs matching the position sensitivity and risk specified."
 
-    formatter:
-        providers:
-            usa_jobs_city:
+            usa_job_announcements:
+                mixins: [usa_jobs_import]
+                option:
+                    HiringAgencyCode:
+                        type: str
+                        help: "The code of the agency in which the position is located."
+                    HiringDepartmentCode:
+                        type: str
+                        help: "The code of the department in which the position is located."
+                    PositionSeries:
+                        type: str
+                        help: "The occupational code identifying the position as indicated on the position description associated with a vacancy."
+                    AnnouncementNumber:
+                        type: str
+                        help: "The unique identifying number associated with an announcement."
+                    USAJOBSControlNumber:
+                        type: str
+                        help: "The USAJOBS provided announcement control number."
+                    StartPositionOpenDate:
+                        type: str
+                        help: "The beginning of the calendar date range when an announcement opened."
+                    EndPositionOpenDate:
+                        type: str
+                        help: "The end of the calendar date range when an announcement opened."
+                    StartPositionCloseDate:
+                        type: str
+                        help: "The beginning of the calendar date range when an announcement closed."
+                    EndPositionCloseDate:
+                        type: str
+                        help: "The end of the calendar date range when an announcement closed."

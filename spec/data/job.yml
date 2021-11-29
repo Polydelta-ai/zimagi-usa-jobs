@@ -26,11 +26,36 @@ data:
                 options:
                     "null": true
                     max_length: 10
+            promotion_potential:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 10
             organization_codes:
                 type: "@django.CharField"
                 options:
                     "null": true
                     max_length: 10
+            vendor:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 256
+            service_type:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 256
+            security_clearance_required:
+                type: "@django.BooleanField"
+                options:
+                    "null": true
+            security_clearance:
+                type: "@django.CharField"
+                options:
+                    "null": true
+                    max_length: 256
+
         meta:
             unique_together: []
 

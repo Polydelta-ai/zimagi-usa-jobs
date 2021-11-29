@@ -1,12 +1,51 @@
+config:
+    name: job_population
+    fields:
+        - id
+        - name
+        - source__name
+        - external_id
+        - url
+        - description
+        - classifications__name
+        - organization__name
+        - department__name
+        - qualifications
+        - evaluations
+        - requirements
+        - required_documents
+        - duties
+        - travel_requirements
+        - education
+        - benefits
+        - benefits_url
+        - start_date
+        - end_date
+        - publication_date
+        - application_close_date
+        - how_to_apply
+        - what_to_expect
+        - other_information
+        - telework_eligible
+        - supervisory_status
+        - drug_test_required
+        - relocation_expenses_reimbursed
+        - openings
+        - who_may_apply
+        - low_grade
+        - high_grade
+        - promotion_potential
+        - organization_codes
+        - vendor
+        - service_type
+        - security_clearance_required
+        - security_clearance
+
 run:
     ml-data:
         command: "data save"
         dataset_provider_name: "collection"
-        dataset_name: job_population
+        dataset_name: "@name"
         dataset_fields:
             index_field: id
-            "job:fields":
-                - id
-                - name
-                - classifications__name
-                - description
+            "usa_job:fields": "@fields"

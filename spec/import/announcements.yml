@@ -1,0 +1,45 @@
+_usa_jobs_announcement_import: &usa_jobs_announcement_import
+    source: usa_job_announcements
+    data:
+        usa_job:
+            relations:
+                source_id:
+                    data: job_source
+                    column: source
+                    required: true
+            map:
+                external_id:
+                    column: id
+                    validators:
+                        exists:
+                            data: usa_job
+                            scope: source
+                travel_requirements:
+                    column: travel_requirements
+                telework_eligible:
+                    column: telework_eligible
+                supervisory_status:
+                    column: supervisory_status
+                drug_test_required:
+                    column: drug_test_required
+                relocation_expenses_reimbursed:
+                    column: relocation_expenses_reimbursed
+                openings:
+                    column: openings
+                    formatter: integer
+                promotion_potential:
+                    column: promotion_potential
+                vendor:
+                    column: vendor
+                service_type:
+                    column: service_type
+                security_clearance_required:
+                    column: security_clearance_required
+                security_clearance:
+                    column: security_clearance
+
+import:
+    usa_jobs_announcements:
+        <<: *usa_jobs_announcement_import
+        requirements: [usa_jobs_search]
+        tags: [job, usa_job]

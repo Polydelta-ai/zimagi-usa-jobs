@@ -1,5 +1,5 @@
-_usa_jobs_api_import: &usa_jobs_api_import
-    source: usa_job
+_usa_jobs_search_import: &usa_jobs_search_import
+    source: usa_job_search
     data:
         location:
             map:
@@ -231,6 +231,6 @@ _usa_jobs_api_import: &usa_jobs_api_import
                     column: organization_codes
 
 import:
-    usa_jobs:
-        <<: *usa_jobs_api_import
+    usa_jobs_search:
+        <<: *usa_jobs_search_import
         tags: [job, usa_job]

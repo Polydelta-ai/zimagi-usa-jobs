@@ -43,7 +43,6 @@ data:
                     "null": false
                     max_length: 20
         meta:
-            verbose_name: grade
             ordering_fields: [code, name]
             ordering: [code]
             search_fields: [code, name]
@@ -53,7 +52,7 @@ command_mixins:
     job_grade:
         class: JobGradeMixin
         meta:
-            grade:
+            job_grade:
                 data: job_grade
                 priority: 1
 
@@ -68,5 +67,5 @@ command:
         grade:
             resource: job_grade
             base: job_grade
-            base_name: grade
+            base_name: job_grade
             priority: 100

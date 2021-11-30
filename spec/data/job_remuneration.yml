@@ -51,7 +51,6 @@ data:
                     "null": false
                     max_length: 30
         meta:
-            verbose_name: remuneration
             ordering_fields: [interval, min_range, max_range]
             ordering: [interval, -max_range]
             search_fields: [interval, min_range, max_range]
@@ -61,7 +60,7 @@ command_mixins:
     job_remuneration:
         class: JobRemunerationMixin
         meta:
-            remuneration:
+            job_remuneration:
                 data: job_remuneration
                 priority: 1
 
@@ -76,5 +75,5 @@ command:
         remuneration:
             resource: job_remuneration
             base: job_remuneration
-            base_name: remuneration
+            base_name: job_remuneration
             priority: 90

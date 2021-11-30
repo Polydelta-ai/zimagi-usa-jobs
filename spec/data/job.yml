@@ -55,7 +55,6 @@ data:
                 options:
                     "null": true
                     max_length: 256
-
         meta:
             unique_together: []
 
@@ -69,7 +68,7 @@ command_mixins:
             - job_offering_type
             - job_remuneration
         meta:
-            job:
+            usa_job:
                 data: usa_job
                 priority: 10
 
@@ -88,5 +87,5 @@ command:
         usa:
             resource: usa_job
             base: usa_job
-            base_name: job
+            base_name: usa_job
             priority: 110

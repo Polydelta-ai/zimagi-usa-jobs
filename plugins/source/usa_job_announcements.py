@@ -1,5 +1,6 @@
 from systems.plugins.index import BaseProvider
 from utility.usa_jobs_api import USAJobsAPI
+from utility.data import normalize_value
 
 
 class Provider(BaseProvider('source', 'usa_job_announcements')):
@@ -32,12 +33,12 @@ class Provider(BaseProvider('source', 'usa_job_announcements')):
             announcement.vendor,
             announcement.travel_requirement,
             True if announcement.telework_eligible.strip().upper() == 'Y' else False,
-            announcement.service_type,
+            normalize_value(announcement.service_type),
             True if announcement.security_clearance_required.strip().upper() == 'Y' else False,
             announcement.security_clearance,
-            announcement.promotion_potential,
+            normalize_value(announcement.promotion_potential),
             True if announcement.supervisory_status.strip().upper() == 'Y' else False,
             True if announcement.drug_test_required.strip().upper() == 'Y' else False,
             True if announcement.relocation_expenses_reimbursed.strip().upper() == 'Y' else False,
-            announcement.total_openings
+            normalize_value(announcement.total_openings)
         ]

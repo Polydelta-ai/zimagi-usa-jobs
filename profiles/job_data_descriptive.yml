@@ -3,8 +3,8 @@ config:
     fields:
         - name
         - description
-        - location_names:CONCAT:locations__name:distinct=True,separator=|
-        - classification_names:CONCAT:classifications__name:distinct=True,separator=|
+        - location_names:CONCAT:locations__name:distinct=True
+        - classification_names:CONCAT:classifications__name:distinct=True
 
 run:
     job-data-descriptive:

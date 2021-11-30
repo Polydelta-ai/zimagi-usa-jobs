@@ -9,19 +9,19 @@ config:
         - description
         - organization__name
         - department__name
-        - location_names:CONCAT:locations__name:distinct=True,separator=|
+        - location_names:CONCAT:locations__name:distinct=True
         - location_count:COUNT:locations__name:distinct=True
-        - classification_names:CONCAT:classifications__name:distinct=True,separator=|
+        - classification_names:CONCAT:classifications__name:distinct=True
         - classification_count:COUNT:classifications__name:distinct=True
-        - grade_names:CONCAT:grades__name:distinct=True,separator=|
+        - grade_names:CONCAT:grades__name:distinct=True
         - grade_count:COUNT:grades__name:distinct=True
-        - offering_type_names:CONCAT:offering_types__name:distinct=True,separator=|
+        - offering_type_names:CONCAT:offering_types__name:distinct=True
         - offering_type_count:COUNT:offering_types__name:distinct=True
-        - schedule_names:CONCAT:schedules__name:distinct=True,separator=|
+        - schedule_names:CONCAT:schedules__name:distinct=True
         - schedule_count:COUNT:schedules__name:distinct=True
-        - remuneration_names:CONCAT:remunerations__interval:distinct=True,separator=|
-        - remuneration_min_ranges:CONCAT:remunerations__min_range:distinct=True,separator=|
-        - remuneration_max_ranges:CONCAT:remunerations__max_range:distinct=True,separator=|
+        - remuneration_names:CONCAT:remunerations__interval:distinct=True
+        - remuneration_min_ranges:CONCAT:remunerations__min_range:distinct=True
+        - remuneration_max_ranges:CONCAT:remunerations__max_range:distinct=True
         - remuneration_min_range:MIN:remunerations__min_range
         - remuneration_max_range:MAX:remunerations__max_range
         - remuneration_count:COUNT:remunerations__interval:distinct=True

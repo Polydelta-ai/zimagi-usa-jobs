@@ -25,7 +25,6 @@ _usa_jobs_search_import: &usa_jobs_search_import
                     validators:
                         string:
                             empty: false
-                    formatter: usa_jobs_city
                 longitude:
                     column: longitude
                     validators:

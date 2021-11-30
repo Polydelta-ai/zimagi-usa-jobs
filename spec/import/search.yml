@@ -233,6 +233,18 @@ _usa_jobs_search_import: &usa_jobs_search_import
                     column: high_grade
                 organization_codes:
                     column: organization_codes
+                promotion_potential:
+                    column: promotion_potential
+                relocation_expenses_reimbursed:
+                    column: relocation
+                service_type:
+                    column: service_type
+                security_clearance:
+                    column: security_clearance
+                drug_test_required:
+                    column: drug_test_required
+                telework_eligible:
+                    column: telework_eligible
 
 import:
     usa_jobs_search:

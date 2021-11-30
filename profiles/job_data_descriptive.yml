@@ -1,13 +1,13 @@
 config:
-    name: "job-sample-descriptive-#time()"
+    name: "job-data-descriptive-#time()"
     fields:
         - name
         - description
         - location_names:CONCAT:locations__name:distinct=True,separator=|
-        - classification_names:CONCAT:classifications__name:distinct=True
+        - classification_names:CONCAT:classifications__name:distinct=True,separator=|
 
 run:
-    ml-sample:
+    job-data-descriptive:
         command: "data save"
         dataset_provider_name: "collection"
         dataset_name: "@name"

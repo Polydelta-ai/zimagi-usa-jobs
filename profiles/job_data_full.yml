@@ -1,5 +1,5 @@
 config:
-    name: "job-population-full-#time()"
+    name: "job-data-full-#time()"
     fields:
         - id
         - name
@@ -57,7 +57,7 @@ config:
         - security_clearance
 
 run:
-    ml-data-full:
+    job-data-full:
         command: "data save"
         dataset_provider_name: "collection"
         dataset_name: "@name"

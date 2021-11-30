@@ -2,7 +2,7 @@ from django.utils.timezone import make_aware
 
 from systems.plugins.index import BaseProvider
 from utility.usa_jobs_api import USAJobsAPI
-from utility.data import get_identifier
+from utility.data import get_identifier, normalize_value
 
 import datetime
 import re
@@ -50,12 +50,6 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 'min_range',
                 'max_range'
             ],
-            'job_description': [
-                'id',
-                'label',
-                'label_description',
-                'content'
-            ],
             'usa_job': [
                 'source',
                 'id',
@@ -74,7 +68,6 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 'end_date',
                 'publication_start_date',
                 'application_close_date',
-                'descriptions',
                 'major_duties',
                 'education',
                 'requirements',
@@ -91,7 +84,13 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 'low_grade',
                 'high_grade',
                 'sub_agency_name',
-                'organization_codes'
+                'organization_codes',
+                'promotion_potential',
+                'relocation',
+                'service_type',
+                'security_clearance',
+                'drug_test_required',
+                'telework_eligible'
             ]
         }
 
@@ -112,11 +111,7 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                     location.country_sub_division_code,
                     location.city_name
                 ]),
-                "{}, {} {}".format(
-                    location.city_name,
-                    location.country_sub_division_code,
-                    location.country_code
-                ),
+                location.location_name,
                 location.country_code,
                 location.country_sub_division_code,
                 location.city_name,
@@ -170,21 +165,9 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 remuneration.maximum_range
             ])
 
-        descriptions = []
-        for description in job.position_formatted_description:
-            descriptions.append([
-                get_identifier([
-                    description.label,
-                    description.label_description,
-                    description.content
-                ]),
-                description.label,
-                description.label_description,
-                description.content
-            ])
-
-        if job.job_summary is None:
-            job.job_summary = "\n\n".join([ str(description[3] or '') for description in descriptions ])
+        telework_eligible = normalize_value(job.user_area.telework_eligible)
+        if job.position_location_display and 'location negotiable' in job.position_location_display.lower():
+            telework_eligible = True
 
         return {
             'location': locations,
@@ -195,7 +178,6 @@ class Provider(BaseProvider('source', 'usa_job_search')):
             'job_schedule': schedules,
             'job_offering_type': offering_types,
             'job_remuneration': remunerations,
-            'job_description': descriptions,
             'usa_job': [
                 source,
                 job.id,
@@ -214,7 +196,6 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 make_aware(datetime.datetime.strptime(job.position_end_date, '%Y-%m-%dT%H:%M:%S.%f')),
                 make_aware(datetime.datetime.strptime(job.publication_start_date, '%Y-%m-%dT%H:%M:%S.%f')),
                 make_aware(datetime.datetime.strptime(job.application_close_date, '%Y-%m-%dT%H:%M:%S.%f')),
-                [ description[0] for description in descriptions ],
                 job.user_area.major_duties,
                 job.user_area.education,
                 job.user_area.requirements,
@@ -228,10 +209,16 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 job.user_area.job_summary,
                 job.user_area.who_may_apply.name,
                 job.user_area.who_may_apply.code,
-                job.user_area.low_grade,
-                job.user_area.high_grade,
+                normalize_value(job.user_area.low_grade),
+                normalize_value(job.user_area.high_grade),
                 job.user_area.sub_agency_name,
-                job.user_area.organization_codes
+                job.user_area.organization_codes,
+                normalize_value(job.user_area.promotion_potential),
+                normalize_value(job.user_area.relocation),
+                normalize_value(job.user_area.service_type),
+                job.user_area.security_clearance,
+                normalize_value(job.user_area.drug_test_required),
+                telework_eligible
             ]
         }
 

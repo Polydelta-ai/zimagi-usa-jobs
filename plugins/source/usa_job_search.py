@@ -14,6 +14,7 @@ class Provider(BaseProvider('source', 'usa_job_search')):
         return {
             'location': [
                 'id',
+                'name',
                 'country',
                 'province',
                 'city',
@@ -111,6 +112,11 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                     location.country_sub_division_code,
                     location.city_name
                 ]),
+                "{}, {} {}".format(
+                    location.city_name,
+                    location.country_sub_division_code,
+                    location.country_code
+                ),
                 location.country_code,
                 location.country_sub_division_code,
                 location.city_name,

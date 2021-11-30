@@ -7,7 +7,8 @@ config:
         - external_id
         - url
         - description
-        - classifications__name
+        - classification_names:CONCAT:classifications__name
+        - classification_count:COUNT:classifications__name
         - organization__name
         - department__name
         - qualifications
@@ -49,3 +50,5 @@ run:
         dataset_fields:
             index_field: id
             "usa_job:fields": "@fields"
+            "usa_job:filters":
+                classification_count__gt: 1

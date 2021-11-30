@@ -3,8 +3,13 @@ _usa_jobs_search_import: &usa_jobs_search_import
     data:
         location:
             map:
-                name:
+                generated_id:
                     column: id
+                    validators:
+                        string:
+                            empty: false
+                name:
+                    column: name
                     validators:
                         string:
                             empty: false

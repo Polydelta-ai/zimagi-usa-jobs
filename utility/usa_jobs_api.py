@@ -93,6 +93,7 @@ class USAJobsSearchResponse(USAJobsResponse):
 
         for result in self._data:
             job = result['MatchedObjectDescriptor']
+            job['Id'] = result['MatchedObjectId']
             job['UserArea'] = job['UserArea']['Details']
 
             self._results.append(RecursiveCollection(**self._convert_keys(job)))

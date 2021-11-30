@@ -192,7 +192,7 @@ class Provider(BaseProvider('source', 'usa_job_search')):
             'job_description': descriptions,
             'usa_job': [
                 source,
-                job.position_id,
+                job.id,
                 job.position_title,
                 job.position_uri,
                 location_ids,

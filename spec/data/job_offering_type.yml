@@ -2,7 +2,7 @@ data_mixins:
     job_offering_type:
         class: JobOfferingTypeMixin
         fields:
-            offering_type:
+            job_offering_type:
                 type: "@django.ForeignKey"
                 relation: job_offering_type
                 options:
@@ -13,7 +13,7 @@ data_mixins:
     job_offering_types:
         class: JobOfferingTypesMixin
         fields:
-            offering_types:
+            job_offering_types:
                 type: "@django.ManyToManyField"
                 relation: job_offering_type
 
@@ -22,10 +22,10 @@ data_base:
         class: JobOfferingTypeBase
         base: resource
         mixins: [job_offering_type]
-        id_fields: [offering_type_id, name]
+        id_fields: [job_offering_type_id, name]
         meta:
-            unique_together: [offering_type, name]
-            scope: offering_type
+            unique_together: [job_offering_type, name]
+            scope: job_offering_type
 
 data:
     job_offering_type:

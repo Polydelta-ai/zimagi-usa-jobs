@@ -2,7 +2,7 @@ data_mixins:
     job_remuneration:
         class: JobRemunerationMixin
         fields:
-            remuneration:
+            job_remuneration:
                 type: "@django.ForeignKey"
                 relation: job_remuneration
                 options:
@@ -13,7 +13,7 @@ data_mixins:
     job_remunerations:
         class: JobRemunerationsMixin
         fields:
-            remunerations:
+            job_remunerations:
                 type: "@django.ManyToManyField"
                 relation: job_remuneration
 
@@ -22,10 +22,10 @@ data_base:
         class: JobRemunerationBase
         base: resource
         mixins: [job_remuneration]
-        id_fields: [remuneration_id, name]
+        id_fields: [job_remuneration_id, name]
         meta:
-            unique_together: [remuneration, name]
-            scope: remuneration
+            unique_together: [job_remuneration, name]
+            scope: job_remuneration
 
 data:
     job_remuneration:

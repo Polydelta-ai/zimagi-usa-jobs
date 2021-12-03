@@ -2,7 +2,7 @@ data_mixins:
     job_grade:
         class: JobGradeMixin
         fields:
-            grade:
+            job_grade:
                 type: "@django.ForeignKey"
                 relation: job_grade
                 options:
@@ -13,7 +13,7 @@ data_mixins:
     job_grades:
         class: JobGradesMixin
         fields:
-            grades:
+            job_grades:
                 type: "@django.ManyToManyField"
                 relation: job_grade
 
@@ -22,10 +22,10 @@ data_base:
         class: JobGradeBase
         base: resource
         mixins: [job_grade]
-        id_fields: [grade_id, name]
+        id_fields: [job_grade_id, name]
         meta:
-            unique_together: [grade, name]
-            scope: grade
+            unique_together: [job_grade, name]
+            scope: job_grade
 
 data:
     job_grade:

@@ -2,7 +2,7 @@ data_mixins:
     job_schedule:
         class: JobScheduleMixin
         fields:
-            schedule:
+            job_schedule:
                 type: "@django.ForeignKey"
                 relation: job_schedule
                 options:
@@ -13,7 +13,7 @@ data_mixins:
     job_schedules:
         class: JobSchedulesMixin
         fields:
-            schedules:
+            job_schedules:
                 type: "@django.ManyToManyField"
                 relation: job_schedule
 
@@ -22,10 +22,10 @@ data_base:
         class: JobScheduleBase
         base: resource
         mixins: [job_schedule]
-        id_fields: [schedule_id, name]
+        id_fields: [job_schedule_id, name]
         meta:
-            unique_together: [schedule, name]
-            scope: schedule
+            unique_together: [job_schedule, name]
+            scope: job_schedule
 
 data:
     job_schedule:

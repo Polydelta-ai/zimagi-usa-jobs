@@ -3,7 +3,7 @@ config:
     fields:
         - id
         - name
-        - source__name
+        - job_source__name
         - external_id
         - url
         - description
@@ -11,20 +11,20 @@ config:
         - department__name
         - location_names:CONCAT:locations__name:distinct=True
         - location_count:COUNT:locations__name:distinct=True
-        - classification_names:CONCAT:classifications__name:distinct=True
-        - classification_count:COUNT:classifications__name:distinct=True
-        - grade_names:CONCAT:grades__name:distinct=True
-        - grade_count:COUNT:grades__name:distinct=True
-        - offering_type_names:CONCAT:offering_types__name:distinct=True
-        - offering_type_count:COUNT:offering_types__name:distinct=True
-        - schedule_names:CONCAT:schedules__name:distinct=True
-        - schedule_count:COUNT:schedules__name:distinct=True
-        - remuneration_names:CONCAT:remunerations__interval:distinct=True
-        - remuneration_min_ranges:CONCAT:remunerations__min_range:distinct=True
-        - remuneration_max_ranges:CONCAT:remunerations__max_range:distinct=True
-        - remuneration_min_range:MIN:remunerations__min_range
-        - remuneration_max_range:MAX:remunerations__max_range
-        - remuneration_count:COUNT:remunerations__interval:distinct=True
+        - classification_names:CONCAT:job_classifications__name:distinct=True
+        - classification_count:COUNT:job_classifications__name:distinct=True
+        - grade_names:CONCAT:job_grades__name:distinct=True
+        - grade_count:COUNT:job_grades__name:distinct=True
+        - offering_type_names:CONCAT:job_offering_types__name:distinct=True
+        - offering_type_count:COUNT:job_offering_types__name:distinct=True
+        - schedule_names:CONCAT:job_schedules__name:distinct=True
+        - schedule_count:COUNT:job_schedules__name:distinct=True
+        - remuneration_names:CONCAT:job_remunerations__interval:distinct=True
+        - remuneration_min_ranges:CONCAT:job_remunerations__min_range:distinct=True
+        - remuneration_max_ranges:CONCAT:job_remunerations__max_range:distinct=True
+        - remuneration_min_range:MIN:job_remunerations__min_range
+        - remuneration_max_range:MAX:job_remunerations__max_range
+        - remuneration_count:COUNT:job_remunerations__interval:distinct=True
         - qualifications
         - evaluations
         - requirements

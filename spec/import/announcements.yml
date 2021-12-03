@@ -3,7 +3,7 @@ _usa_jobs_announcement_import: &usa_jobs_announcement_import
     data:
         usa_job:
             relations:
-                source_id:
+                job_source_id:
                     data: job_source
                     column: source
                     required: true
@@ -13,7 +13,7 @@ _usa_jobs_announcement_import: &usa_jobs_announcement_import
                     validators:
                         exists:
                             data: usa_job
-                            scope: source
+                            scope: job_source
                 travel_requirements:
                     column: travel_requirements
                 telework_eligible:

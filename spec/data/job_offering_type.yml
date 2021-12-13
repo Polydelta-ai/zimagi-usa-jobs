@@ -42,6 +42,11 @@ data:
                 options:
                     "null": false
                     max_length: 20
+            name:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 1000
         meta:
             ordering_fields: [code, name]
             ordering: [code]

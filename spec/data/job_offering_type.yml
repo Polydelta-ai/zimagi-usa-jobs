@@ -20,7 +20,7 @@ data_mixins:
 data_base:
     job_offering_type:
         class: JobOfferingTypeBase
-        base: resource
+        base: id_resource
         mixins: [job_offering_type]
         id_fields: [job_offering_type_id, name]
         meta:
@@ -30,8 +30,8 @@ data_base:
 data:
     job_offering_type:
         class: JobOfferingType
-        base: resource
-        id_fields: [code]
+        base: name_resource
+        id: code
         key: code
         roles:
             edit: [job-admin]
@@ -40,17 +40,16 @@ data:
             code:
                 type: "@django.CharField"
                 options:
-                    "null": false
+                    primary_key: true
                     max_length: 20
+                    editable: false
             name:
                 type: "@django.CharField"
                 options:
                     "null": false
                     max_length: 1000
         meta:
-            ordering_fields: [code, name]
             ordering: [code]
-            search_fields: [code, name]
             command_base: job offering_type
 
 command_mixins:

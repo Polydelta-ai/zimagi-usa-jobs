@@ -3,7 +3,7 @@ _usa_jobs_search_import: &usa_jobs_search_import
     data:
         location:
             map:
-                generated_id:
+                id:
                     column: id
                     validators:
                         string:
@@ -41,6 +41,7 @@ _usa_jobs_search_import: &usa_jobs_search_import
                 parent_id:
                     data: organization
                     column: parent
+                    key_field: name
                     required: false
                 locations:
                     data: location
@@ -105,7 +106,7 @@ _usa_jobs_search_import: &usa_jobs_search_import
                             empty: false
         job_remuneration:
             map:
-                name:
+                id:
                     column: id
                     validators:
                         string:
@@ -142,10 +143,12 @@ _usa_jobs_search_import: &usa_jobs_search_import
                 organization_id:
                     data: organization
                     column: organization
+                    key_field: name
                     required: true
                 department_id:
                     data: organization
                     column: department
+                    key_field: name
                     required: true
                 locations:
                     data: location

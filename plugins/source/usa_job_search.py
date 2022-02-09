@@ -1,5 +1,3 @@
-from django.utils.timezone import make_aware
-
 from systems.plugins.index import BaseProvider
 from utility.usa_jobs_api import USAJobsAPI
 from utility.data import get_identifier, normalize_value
@@ -121,8 +119,8 @@ class Provider(BaseProvider('source', 'usa_job_search')):
         location_ids = [ location[0] for location in locations ]
 
         organizations = [
-            [ job.organization_name, None, location_ids ],
-            [ job.department_name, job.organization_name, location_ids ]
+            [ job.department_name, None, location_ids ],
+            [ job.organization_name, job.department_name, location_ids ]
         ]
 
         classifications = []
@@ -192,10 +190,10 @@ class Provider(BaseProvider('source', 'usa_job_search')):
                 [ offering_type[0] for offering_type in offering_types ],
                 [ remuneration[0] for remuneration in remunerations ],
                 job.qualification_summary,
-                make_aware(datetime.datetime.strptime(job.position_start_date, '%Y-%m-%dT%H:%M:%S.%f')),
-                make_aware(datetime.datetime.strptime(job.position_end_date, '%Y-%m-%dT%H:%M:%S.%f')),
-                make_aware(datetime.datetime.strptime(job.publication_start_date, '%Y-%m-%dT%H:%M:%S.%f')),
-                make_aware(datetime.datetime.strptime(job.application_close_date, '%Y-%m-%dT%H:%M:%S.%f')),
+                datetime.datetime.strptime(job.position_start_date, '%Y-%m-%dT%H:%M:%S.%f'),
+                datetime.datetime.strptime(job.position_end_date, '%Y-%m-%dT%H:%M:%S.%f'),
+                datetime.datetime.strptime(job.publication_start_date, '%Y-%m-%dT%H:%M:%S.%f'),
+                datetime.datetime.strptime(job.application_close_date, '%Y-%m-%dT%H:%M:%S.%f'),
                 job.user_area.major_duties,
                 job.user_area.education,
                 job.user_area.requirements,

@@ -20,7 +20,7 @@ data_mixins:
 data_base:
     job_remuneration:
         class: JobRemunerationBase
-        base: resource
+        base: id_resource
         mixins: [job_remuneration]
         id_fields: [job_remuneration_id, name]
         meta:
@@ -30,11 +30,15 @@ data_base:
 data:
     job_remuneration:
         class: JobRemuneration
-        base: resource
+        base: id_resource
         roles:
             edit: [job-admin]
             view: [public]
+        id_fields: null
+        id: id
+        key: id
         fields:
+            name: null
             interval:
                 type: "@django.CharField"
                 options:
@@ -51,9 +55,7 @@ data:
                     "null": false
                     max_length: 30
         meta:
-            ordering_fields: [interval, min_range, max_range]
             ordering: [interval, -max_range]
-            search_fields: [interval, min_range, max_range]
             command_base: job remuneration
 
 command_mixins:

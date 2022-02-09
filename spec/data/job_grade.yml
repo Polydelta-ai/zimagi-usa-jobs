@@ -20,7 +20,7 @@ data_mixins:
 data_base:
     job_grade:
         class: JobGradeBase
-        base: resource
+        base: id_resource
         mixins: [job_grade]
         id_fields: [job_grade_id, name]
         meta:
@@ -30,8 +30,8 @@ data_base:
 data:
     job_grade:
         class: JobGrade
-        base: resource
-        id_fields: [code]
+        base: name_resource
+        id: code
         key: code
         roles:
             edit: [job-admin]
@@ -40,12 +40,16 @@ data:
             code:
                 type: "@django.CharField"
                 options:
-                    "null": false
+                    primary_key: true
                     max_length: 20
+                    editable: false
+            name:
+                type: "@django.CharField"
+                options:
+                    "null": false
+                    max_length: 256
         meta:
-            ordering_fields: [code, name]
             ordering: [code]
-            search_fields: [code, name]
             command_base: job grade
 
 command_mixins:

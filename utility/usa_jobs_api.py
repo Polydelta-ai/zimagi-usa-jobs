@@ -2,7 +2,6 @@ from django.conf import settings
 
 from .data import RecursiveCollection
 
-import copy
 import time
 import requests
 import re
@@ -63,26 +62,6 @@ class USAJobsCodeListResponse(USAJobsResponse):
             self._results.append(RecursiveCollection(**self._convert_keys(result)))
 
 
-class USAJobsAnnouncementResponse(USAJobsResponse):
-
-    def __init__(self, response):
-        super().__init__(response)
-
-        self._paging = self.json.get('paging', {}).get('metadata', {})
-        self._data = self.json.get('data', [])
-
-        for announcement in self._data:
-            self._results.append(RecursiveCollection(**self._convert_keys(announcement)))
-
-    @property
-    def count(self):
-        return len(self._data)
-
-    @property
-    def full_count(self):
-        return self._paging.get('totalCount', 0)
-
-
 class USAJobsSearchResponse(USAJobsResponse):
 
     def __init__(self, response):
@@ -134,33 +113,6 @@ class USAJobsAPI(object):
             raise USAJobsException("USA Jobs CodeList API returned status code: {}".format(response.status_code))
 
         return USAJobsCodeListResponse(response)
-
-
-    def announcements(self, page_count = 1000, **params):
-        response = None
-        next_page = 1
-
-        while response is None or response.count == page_count:
-            response = self._announcements(params, page_count, next_page)
-
-            for result in response.results:
-                yield result
-
-            next_page += 1
-            time.sleep(self.wait_time)
-
-    def _announcements(self, params, page_count, page):
-        params['Pagesize'] = page_count
-        params['PageNumber'] = page
-
-        self.command.info("Searching USA Job announcements with search parameters: {}".format(params))
-        response = requests.get("{}/api/historicjoa".format(self.BASE_URL))
-        logger.debug(response.url)
-
-        if response.status_code != 200:
-            raise USAJobsException("USA Jobs Announcement API returned status code: {}".format(response.status_code))
-
-        return USAJobsAnnouncementResponse(response)
 
 
     def search(self, page_count = 500, **params):

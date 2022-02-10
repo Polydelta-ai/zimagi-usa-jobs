@@ -61,16 +61,26 @@ data:
 command_mixins:
     usa_job:
         class: USAJobMixin
-        mixins:
-            - job
-            - job_grade
-            - job_schedule
-            - job_offering_type
-            - job_remuneration
+        mixins: [job]
         meta:
+            job_classifications:
+                data: job_classification
+                priority: 1
+            job_schedules:
+                data: job_schedule
+                priority: 2
+            job_grades:
+                data: job_grade
+                priority: 2
+            job_offering_types:
+                data: job_offering_type
+                priority: 2
+            job_remunerations:
+                data: job_remuneration
+                priority: 2
             usa_job:
                 data: usa_job
-                priority: 10
+                priority: 3
 
 command_base:
     usa_job:

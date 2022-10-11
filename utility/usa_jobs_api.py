@@ -115,9 +115,18 @@ class USAJobsAPI(object):
         return USAJobsCodeListResponse(response)
 
 
-    def search(self, page_count = 500, **params):
+    def search(self,
+        params = None,
+        page_count = 500,
+        start_page = 1,
+        next_callback = None,
+        complete_callback = None
+    ):
         response = None
-        next_page = 1
+        next_page = start_page
+
+        if not params:
+            params = {}
 
         for name, value in params.items():
             if isinstance(value, (list, tuple)):
@@ -130,7 +139,14 @@ class USAJobsAPI(object):
                 yield result
 
             next_page += 1
+            if next_callback and callable(next_callback):
+                next_callback(next_page)
+
             time.sleep(self.wait_time)
+
+        if complete_callback and callable(complete_callback):
+                complete_callback()
+
 
     def _search(self, params, page_count, page):
         if not self.api_email or not self.api_key:

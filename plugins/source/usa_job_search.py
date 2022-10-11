@@ -94,7 +94,24 @@ class Provider(BaseProvider('source', 'usa_job_search')):
 
 
     def load_items(self, context):
-        return USAJobsAPI(self.command).search(**self._get_search_params())
+        parameters = self._get_search_params()
+        page_state_id = "{}-{}-page".format(
+            self.state_id,
+            get_identifier(parameters)
+        )
+
+        def save_page_index(page):
+            self.command.set_state(page_state_id, page)
+
+        def delete_page_index():
+            self.command.delete_state(page_state_id)
+
+        return USAJobsAPI(self.command).search(
+            params = parameters,
+            start_page = self.command.get_state(page_state_id, 1),
+            next_callback = save_page_index,
+            complete_callback = delete_page_index
+        )
 
     def load_item(self, job, context):
         source = 'USAJobs'
